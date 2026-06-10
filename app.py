@@ -77,23 +77,29 @@ header[data-testid="stHeader"] {
     height: 2.75rem !important;
 }
 
-div[data-testid="collapsedControl"] {
-    display: flex !important;
+/* Force sidebar always visible on Streamlit Cloud */
+section[data-testid="stSidebar"] {
+    display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    z-index: 999999 !important;
-    cursor: pointer !important;
-    background: #161b22 !important;
-    border: 1px solid #30363d !important;
-    border-radius: 9px !important;
-}
-
-div[data-testid="collapsedControl"] * { cursor: pointer !important; }
-
-section[data-testid="stSidebar"] {
+    transform: none !important;
+    width: 18rem !important;
+    min-width: 18rem !important;
     background: #161b22 !important;
     border-right: 1px solid #30363d !important;
+    position: relative !important;
+    z-index: 1 !important;
+    margin-left: 0 !important;
 }
+
+section[data-testid="stSidebar"][aria-expanded="false"] {
+    display: block !important;
+    visibility: visible !important;
+    transform: none !important;
+    margin-left: 0 !important;
+}
+
+div[data-testid="collapsedControl"] { display: none !important; }
 
 section[data-testid="stSidebar"] > div { padding: 0.8rem 0.75rem !important; }
 section[data-testid="stSidebar"] * { color: #c9d1d9 !important; }
@@ -122,11 +128,28 @@ div[role="radiogroup"] label {
     padding: 0.5rem 0.6rem !important;
     margin: 0.05rem 0 !important;
     cursor: pointer !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 div[role="radiogroup"] label:hover { background: #21262d !important; }
-div[role="radiogroup"] label[data-baseweb="radio"] > div:first-child { display: none !important; }
-div[role="radiogroup"] label p { font-size: 0.86rem !important; font-weight: 700 !important; }
+
+/* Hide only the radio dot, not the whole label */
+div[role="radiogroup"] label > div:first-child,
+div[role="radiogroup"] [data-testid="stMarkdownContainer"] ~ div:first-child,
+div[role="radiogroup"] input[type="radio"] { 
+    display: none !important; 
+}
+
+div[role="radiogroup"] label p { 
+    font-size: 0.86rem !important; 
+    font-weight: 700 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #c9d1d9 !important;
+}
 div[role="radiogroup"] * { cursor: pointer !important; }
 
 .stSelectbox, .stSelectbox *, div[data-baseweb="select"], div[data-baseweb="select"] * {
@@ -1642,3 +1665,4 @@ st.markdown(
     '<div style="text-align:center;color:#6e7681;font-size:.75rem;padding:24px 0 8px;">SupplierDash · Interactive KPI Monitoring · Powered by Streamlit</div>',
     unsafe_allow_html=True,
 )
+
